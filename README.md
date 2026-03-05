@@ -1,6 +1,109 @@
-# go-mutesting [![GoDoc](https://godoc.org/github.com/zimmski/go-mutesting?status.png)](https://godoc.org/github.com/zimmski/go-mutesting) [![Build Status](https://travis-ci.org/zimmski/go-mutesting.svg?branch=master)](https://travis-ci.org/zimmski/go-mutesting) [![Coverage Status](https://coveralls.io/repos/zimmski/go-mutesting/badge.png?branch=master)](https://coveralls.io/r/zimmski/go-mutesting?branch=master)
+# go-demaesmaker - Resilient testing
 
-go-mutesting is a framework for performing mutation testing on Go source code. Its main purpose is to find source code, which is not covered by any tests.
+go-demaesmaker wreaks havoc in your code and checks that your test suite detects these changes.
+
+This project proposes a rich mutesting tool specifically tailored for go.
+
+It assesses the resilience of your test suite to random changes.
+
+## About mutesting
+
+mutesting (mutation testing) is a technique used to assess test quality by introducing faults in a program
+(_mutations_) and verifying that the test suite detects (_kills_) the mutation with a test failure.
+
+It supplements code coverage measurements by ensuring that no only tests _cover_ code path, but also do a good
+job at asserting the outcome of the test.
+
+## Features
+
+* Rich suite of [mutation strategies](MUTATIONS.md)
+* Aggressive mutations that cause panics or hangs
+* Smart duplicate pruning
+* Parallel execution
+* Batched mutations
+* Coverage-aware and call graph dependency aware scheduling
+
+## Test assessment report
+
+## Test discovery
+
+## Test runner
+
+## Design
+
+go-demaesmaker combines the best of two complementary approaches:
+
+- **AST-structural mutations** (from go-mutesting): emptying branches, removing statements, swapping if/else — mutations that require understanding code structure
+- **Token-level operator mutations** (from gremlins): swapping `+`/`-`, `&&`/`||`, `<`/`<=` — broad coverage of operator errors
+
+On top of these, it adds **severity mutations** that deliberately introduce crashes and deadlocks:
+nil guard removal, off-by-one index shifts, lock/unlock removal, and channel operation removal.
+These aggressive mutations verify that your tests catch not just logic errors but also panics and hangs.
+
+The mutation pipeline is built around a **value descriptor model**: mutations are plain data structs
+with no AST references, safe to serialize and pass across goroutines. Strategies are stateless
+and self-registering. Discovery uses lazy `iter.Seq` iterators (Go 1.23+).
+
+See the full [mutation catalogue](MUTATIONS.md) for all 76 mutation rules across 22 strategies.
+
+## Inspiration
+
+- [gremlins](https://github.com/go-gremlins/gremlins) — token-level mutations, coverage pruning, parallel execution
+- [go-mutesting](https://github.com/zimmski/go-mutesting) — AST-structural mutations, type-aware noop generation
+- [stryker4s](https://github.com/stryker-mutator/stryker4s) — mutation testing for Scala, inspiration for literal and conditional expression mutations
+- [manbearpig](https://github.com/darkhelmet/manbearpig), [mutator](https://github.com/kisielk/mutator), [Golang-Mutation-testing](https://github.com/StefanSchroeder/Golang-Mutation-testing) — earlier Go mutation testing projects
+
+## Alternatives
+
+See [COMPARATIVE_ANALYSIS.md](COMPARATIVE_ANALYSIS.md) for a detailed comparison.
+
+### Comparing mutation strategies
+
+| Category | go-demaesmaker | gremlins | go-mutesting |
+|:---------|:--------------:|:--------:|:------------:|
+| Arithmetic (`+`/`-`, `*`/`/`) | 5 | 5 | - |
+| Conditionals (boundary + negation) | 10 | 10 | 2 |
+| Logical (`&&`/`\|\|`) | 2 | 2 | - |
+| Bitwise & shifts | 5 | - | - |
+| Assignments (`+=`/`-=`, remove self) | 14 | - | - |
+| Increment/decrement | 2 | 2 | - |
+| Loop control (`break`/`continue`) | 2 | - | - |
+| Unary negation | 1 | 1 | - |
+| Branch emptying (if/else/case) | 3 | - | 3 |
+| Branch swapping | 2 | - | - |
+| Statement removal | 1 | - | 1 |
+| Expression term removal | 1 | - | 1 |
+| Boolean literals | 2 | - | - |
+| Conditional expressions | 2 | - | - |
+| String literals | 2 | - | - |
+| Return value mutations | 3 | - | - |
+| Panic to return | 1 | - | - |
+| Argument swap | 1 | - | - |
+| Nil guard removal | 1 | - | - |
+| Slice/index off-by-one | 4 | - | - |
+| Lock/unlock removal | 4 | - | - |
+| Channel ops removal | 3 | - | - |
+| **Total** | **76** | **~20** | **~7** |
+
+### Comparing runner strategies
+
+TODO
+
+### Performance
+
+TODO
+
+
+## A note from the AI collaborator
+
+The mutation pipeline for go-demaesmaker was designed and implemented in a human-AI pair programming session.
+I (Claude) architected the value descriptor model, wrote the 22 strategy packages and their tests,
+designed the `ApplySpec` tagged union for clean separation between discovery and application,
+and ported the best mutation ideas from both gremlins and go-mutesting into a unified, composable framework.
+
+The name "DeMaesmaker" was Fred's idea. The 76 ways to wreak havoc in your code were ours together.
+
+<!--
 
 ## Quick example
 
@@ -273,3 +376,4 @@ All of them have significant flaws in comparison to go-mutesting:
 ## <a name="feature-request"></a>Can I make feature requests and report bugs and problems?
 
 Sure, just submit an [issue via the project tracker](https://github.com/zimmski/go-mutesting/issues/new) and I will see what I can do. Please note that I do not guarantee to implement anything soon and bugs and problems are more important to me than new features. If you need something implemented or fixed right away you can contact me via mail <mz@nethead.at> to do contract work for you.
+-->

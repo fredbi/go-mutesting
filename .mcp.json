@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "mcp-gopls": {
+      "type": "stdio",
+      "command": "mcp-gopls",
+      "args": [
+        "--workspace",
+        "/home/fred/src/github.com/fredbi/go-mutesting"
+      ],
+      "env": {
+        "MCP_GOPLS_LOG_LEVEL": "info"
+      }
+    },
+    "mcp-gopls-gremlins": {
+      "type": "stdio",
+      "command": "mcp-gopls",
+      "args": [
+        "--workspace",
+        "/home/fred/src/github.com/fredbi/gremlins"
+      ],
+      "env": {
+        "MCP_GOPLS_LOG_LEVEL": "info"
+      }
+    }
+  }
+}
