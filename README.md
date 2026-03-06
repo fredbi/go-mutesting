@@ -1,6 +1,6 @@
-# go-demaesmaker - Resilient testing
+# go-demesmaeker - Resilient testing
 
-go-demaesmaker wreaks havoc in your code and checks that your test suite detects these changes.
+go-demesmaeker wreaks havoc in your code and checks that your test suite detects these changes.
 
 This project proposes a rich mutesting tool specifically tailored for go.
 
@@ -9,9 +9,9 @@ It assesses the resilience of your test suite to random changes.
 ## About mutesting
 
 mutesting (mutation testing) is a technique used to assess test quality by introducing faults in a program
-(_mutations_) and verifying that the test suite detects (_kills_) the mutation with a test failure.
+(_mutations_) and verifying that the test suite detects (_kills_) the mutations with a test failure.
 
-It supplements code coverage measurements by ensuring that no only tests _cover_ code path, but also do a good
+It supplements code coverage measurements by ensuring that tests not only _cover_ some code path, but also do a good
 job at asserting the outcome of the test.
 
 ## Features
@@ -23,15 +23,22 @@ job at asserting the outcome of the test.
 * Batched mutations
 * Coverage-aware and call graph dependency aware scheduling
 
-## Test assessment report
+## Test assessment 
 
+The test report comes in two forms: summarized and detailed report.
+They produce the following information:
+* kill ratio per package
+* kill ratio per function
+* 
 ## Test discovery
 
 ## Test runner
 
+## github action
+
 ## Design
 
-go-demaesmaker combines the best of two complementary approaches:
+go-demesmaeker combines the best of two complementary approaches:
 
 - **AST-structural mutations** (from go-mutesting): emptying branches, removing statements, swapping if/else — mutations that require understanding code structure
 - **Token-level operator mutations** (from gremlins): swapping `+`/`-`, `&&`/`||`, `<`/`<=` — broad coverage of operator errors
@@ -59,7 +66,7 @@ See [COMPARATIVE_ANALYSIS.md](COMPARATIVE_ANALYSIS.md) for a detailed comparison
 
 ### Comparing mutation strategies
 
-| Category | go-demaesmaker | gremlins | go-mutesting |
+| Category | go-demesmaeker | gremlins | go-mutesting |
 |:---------|:--------------:|:--------:|:------------:|
 | Arithmetic (`+`/`-`, `*`/`/`) | 5 | 5 | - |
 | Conditionals (boundary + negation) | 10 | 10 | 2 |
@@ -96,7 +103,7 @@ TODO
 
 ## A note from the AI collaborator
 
-The mutation pipeline for go-demaesmaker was designed and implemented in a human-AI pair programming session.
+The mutation pipeline for `go-demesmaeker` was designed and implemented in a human-AI pair programming session.
 I (Claude) architected the value descriptor model, wrote the 22 strategy packages and their tests,
 designed the `ApplySpec` tagged union for clean separation between discovery and application,
 and ported the best mutation ideas from both gremlins and go-mutesting into a unified, composable framework.
@@ -377,3 +384,4 @@ All of them have significant flaws in comparison to go-mutesting:
 
 Sure, just submit an [issue via the project tracker](https://github.com/zimmski/go-mutesting/issues/new) and I will see what I can do. Please note that I do not guarantee to implement anything soon and bugs and problems are more important to me than new features. If you need something implemented or fixed right away you can contact me via mail <mz@nethead.at> to do contract work for you.
 -->
+<img width="960" height="422" alt="image" src="https://github.com/user-attachments/assets/3dfe8c32-1cb4-40c6-86c2-fc2a17efe36a" />
