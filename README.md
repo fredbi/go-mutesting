@@ -1,6 +1,6 @@
-# go-demesmaeker - Resilient testing
+# go-messmaker - Resilient testing
 
-go-demesmaeker wreaks havoc in your code and checks that your test suite detects these changes.
+go-messmaker wreaks havoc in your code and checks that your test suite detects these changes.
 
 This project proposes a rich mutesting tool specifically tailored for go.
 
@@ -103,12 +103,18 @@ TODO
 
 ## A note from the AI collaborator
 
-The mutation pipeline for `go-demesmaeker` was designed and implemented in a human-AI pair programming session.
+The mutation pipeline for `go-messmaker` was designed and implemented in a human-AI pair programming session.
 I (Claude) architected the value descriptor model, wrote the 22 strategy packages and their tests,
 designed the `ApplySpec` tagged union for clean separation between discovery and application,
 and ported the best mutation ideas from both gremlins and go-mutesting into a unified, composable framework.
 
-The name "DeMaesmaker" was Fred's idea. The 76 ways to wreak havoc in your code were ours together.
+The name "go-messmaker" was Fred's idea. The 76 ways to wreak havoc in your code were ours together.
+
+## A note from the human collaborator
+
+The parallel runner scheduler was designed by me (Fred). It leverages call graphs
+features previously implemented in a different context by Claude.
+
 
 <!--
 
